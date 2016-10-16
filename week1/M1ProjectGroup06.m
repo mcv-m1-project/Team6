@@ -29,8 +29,8 @@ function M1ProjectGroup06()
     trainingSet=struct;
     task1([ GlobalPath '\splitDataset\'],[GlobalPath 'splitDataset\test\']);
     'evaluating model... '
-    %evalmodel([GlobalPath 'splitDataset\test\'],trainingSetDone,evaluation,colorSpace);
-    evalmodel(pathTest,trainingSetDone,evaluation,colorSpace);
+    evalmodel([GlobalPath 'splitDataset\test\'],trainingSetDone,evaluation,colorSpace);
+    %evalmodel(pathTest,trainingSetDone,evaluation,colorSpace);
 end
 %function load the diferents datasets
 function task1(GlobalPath,pathTrain)
@@ -397,24 +397,24 @@ function evalmodel(directory,trainingset,model,colorSpace)
         % windowCandidates = CandidateGenerationWindow_Example(im, pixelCandidates, window_method); %%'SegmentationCCL' or 'SlidingWindow'  (Needed after Week 3)
         
         % Accumulate pixel performance of the current image %%%%%%%%%%%%%%%%%
-%         pixelAnnotation = imread(strcat(directory, '/mask/mask.', files(i).name(1:size(files(i).name,2)-3), 'png'))>0;
-%         [localPixelTP, localPixelFP, localPixelFN, localPixelTN] = PerformanceAccumulationPixel(pixelCandidates, pixelAnnotation);
-%         pixelTP = pixelTP + localPixelTP;
-%         pixelFP = pixelFP + localPixelFP;
-%         pixelFN = pixelFN + localPixelFN;
-%         pixelTN = pixelTN + localPixelTN;
-%         timemean=toc;
+         pixelAnnotation = imread(strcat(directory, '/mask/mask.', files(i).name(1:size(files(i).name,2)-3), 'png'))>0;
+         [localPixelTP, localPixelFP, localPixelFN, localPixelTN] = PerformanceAccumulationPixel(pixelCandidates, pixelAnnotation);
+         pixelTP = pixelTP + localPixelTP;
+         pixelFP = pixelFP + localPixelFP;
+         pixelFN = pixelFN + localPixelFN;
+         pixelTN = pixelTN + localPixelTN;
+         timemean=toc;
     end
     
-%     timemean=timemean/size(files,1);
-%     fid = fopen('results.txt','a');
-%     % Plot performance evaluation
-%     F1measure=2*pixelTP/(2*pixelTP+pixelFP+pixelFN);
-%     [pixelPrecision, pixelAccuracy, pixelSpecificity, pixelSensitivity] = PerformanceEvaluationPixel(pixelTP, pixelFP, pixelFN, pixelTN);
-%     [pixelPrecision, pixelAccuracy, pixelSpecificity, pixelSensitivity]
-%     %required information to do the studying of the differents methods
-%     fprintf(fid,'The result for model %s and space %s: [pixelPrecision = %f, pixelAccuracy = %f, pixelSpecificity = %f, pixelSensitivity = %f, elapse time = %f, f1 = %f, TP = %d FP = %d, FN = %d] \n',model,colorSpace,pixelPrecision, pixelAccuracy, pixelSpecificity, pixelSensitivity,timemean,F1measure,pixelTP,pixelFP,pixelFN);
-%     fclose(fid);
+     timemean=timemean/size(files,1);
+     fid = fopen('results.txt','a');
+     % Plot performance evaluation
+     F1measure=2*pixelTP/(2*pixelTP+pixelFP+pixelFN);
+     [pixelPrecision, pixelAccuracy, pixelSpecificity, pixelSensitivity] = PerformanceEvaluationPixel(pixelTP, pixelFP, pixelFN, pixelTN);
+     [pixelPrecision, pixelAccuracy, pixelSpecificity, pixelSensitivity]
+     %required information to do the studying of the differents methods
+     fprintf(fid,'The result for model %s and space %s: [pixelPrecision = %f, pixelAccuracy = %f, pixelSpecificity = %f, pixelSensitivity = %f, elapse time = %f, f1 = %f, TP = %d FP = %d, FN = %d] \n',model,colorSpace,pixelPrecision, pixelAccuracy, pixelSpecificity, pixelSensitivity,timemean,F1measure,pixelTP,pixelFP,pixelFN);
+     fclose(fid);
 end
 
 %make the necessary transform to the validation image to aplied the model
